@@ -1,0 +1,19 @@
+fdisk /dev/vda << EOF
+n
+p
+3
+
+
+t
+3
+8e
+w
+EOF
+
+partprobe
+pvcreate /dev/vda3
+vgdisplay
+vgextend centos /dev/vda3
+vgdisplay
+lvextend -l +23561 /dev/mapper/centos-root
+xfs_growfs /dev/mapper/centos-root
