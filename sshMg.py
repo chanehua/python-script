@@ -11,6 +11,9 @@ import argparse
 def getArgs():
     parse=argparse.ArgumentParser()
     parse.add_argument('-ip',type=str,default="",help="指定获取ip列表，以逗号分隔")
+    parse.add_argument('-u',type=str,default="centos",help="指定登录远程主机用户名")
+    parse.add_argument('-p',type=str,default="MbZ6lDw9W3",help="指定私钥证书密码")
+    parse.add_argument('-f',type=str,default="~/yhchen",help="指定私钥文件路径")
     return parse.parse_args()
 
 #ssh config modify
@@ -30,13 +33,13 @@ def sshModifyFun(ipList,user,pwd,certFile):
 if __name__=='__main__':
     args=getArgs()
     ipStr=args.ip
+    user=args.u
+    pwd=args.p
+    certFile=args.f
     #判断ip列表是否为空，为空则需要使用-ip指定ip列表
     if ipStr != "":
         #调用sshModifyFun
         ipList = ipStr.split(",")
-        user = 'centos'
-        pwd = 'MbZ6lDw9W3'
-        certFile = '~/yhchen'
         sshModifyFun(ipList,user,pwd,certFile)
     else:
         print("ip列表不能为空，请使用-ip指定ip列表")
